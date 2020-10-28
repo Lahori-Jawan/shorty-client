@@ -6,6 +6,11 @@
       :forceRerender="shouldRerender"
     />
     <modal :showing="isModalActive" v-if="isModalActive" />
+    <Loader
+      v-if="loading && !isLoggedIn"
+      class="absolute w-full h-full flex items-center overlay loader"
+      size="large"
+    />
     <router-view></router-view>
   </div>
 </template>
@@ -23,7 +28,7 @@ export default {
     this.isLoggedIn && this.GetUrls();
   },
   computed: {
-    ...mapState(['notification', 'isModalActive']),
+    ...mapState(['notification', 'isModalActive', 'loading']),
     ...mapGetters(['isLoggedIn', 'isModalChanged']),
     shouldRerender() {
       return (
@@ -87,5 +92,9 @@ export default {
 }
 .strike-through {
   text-decoration: line-through;
+}
+.overlay {
+  z-index: 9;
+  background: #1a202c8a;
 }
 </style>

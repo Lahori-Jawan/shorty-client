@@ -3,7 +3,7 @@ import { TokenService } from '@/services/Token';
 import store from '../store';
 
 const defaultOptions = {
-  baseURL: process.env.VUE_APP_baseURL || 'http://localhost:3000',
+  baseURL: process.env.VUE_APP_baseURL,
   headers: {
     'Content-Type': 'application/json',
   },

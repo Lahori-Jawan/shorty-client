@@ -1,7 +1,7 @@
 <template>
   <Transition name="fade">
     <div
-      class="fixed w-full h-full px-4 modal"
+      class="fixed w-full h-full px-4 modal overlay"
       :class="{ hidden: !showing }"
       style="z-index: 9"
     >

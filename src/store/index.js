@@ -9,6 +9,7 @@ const defaultDomain = { domain: 'https://pbid.io' };
 
 const store = new Vuex.Store({
   state: {
+    loading: null,
     user: null,
     notification: {
       message: '',
@@ -50,12 +51,16 @@ const store = new Vuex.Store({
       state.urls = [];
       state.notification = { message: '', type: '' };
       state.isModalActive = false;
+      // state.loading = false;
+    },
+    SET_LOADING(state, status) {
+      state.loading = status;
     },
   },
 
   actions: {
     async Register({ commit }, credentials) {
-      console.log({ credentials });
+      commit('SET_LOADING', true);
       try {
         const { message, user } = (
           await axios.post('/auth/register', { ...credentials })
@@ -71,8 +76,10 @@ const store = new Vuex.Store({
           type: 'ERROR',
         });
       }
+      commit('SET_LOADING', false);
     },
     async Login({ commit }, credentials) {
+      commit('SET_LOADING', true);
       try {
         const { message, user } = (
           await axios.post('/auth/login', { ...credentials })
@@ -87,8 +94,10 @@ const store = new Vuex.Store({
           type: 'ERROR',
         });
       }
+      commit('SET_LOADING', false);
     },
     async Logout({ commit }, message = '') {
+      commit('SET_LOADING', true);
       try {
         // await axios.post('/api/auth/logout');
         TokenService.clearStorage();
@@ -101,8 +110,10 @@ const store = new Vuex.Store({
           type: 'ERROR',
         });
       }
+      commit('SET_LOADING', false);
     },
     async GetUser({ commit }) {
+      commit('SET_LOADING', true);
       try {
         const { data } = await axios.get('/api/users/user');
         const { message, user } = data;
@@ -120,7 +131,9 @@ const store = new Vuex.Store({
           type: 'ERROR',
         });
         TokenService.clearStorage();
+        commit('SET_LOADING', false);
       }
+      commit('SET_LOADING', false);
     },
     async GetUrls({ commit }) {
       try {
@@ -140,6 +153,7 @@ const store = new Vuex.Store({
       }
     },
     async GenerateShortUrl({ commit }, originalURL) {
+      commit('SET_LOADING', true);
       try {
         const { data } = await axios.post('/api/users/shorten-url', {
           url: originalURL,
@@ -158,8 +172,10 @@ const store = new Vuex.Store({
           type: 'ERROR',
         });
       }
+      commit('SET_LOADING', false);
     },
     async SetActiveDomain({ commit }, domainId) {
+      commit('SET_LOADING', true);
       try {
         const { data } = await axios.post('/api/users/set-active-domain', {
           domainId,
@@ -178,8 +194,10 @@ const store = new Vuex.Store({
           type: 'ERROR',
         });
       }
+      commit('SET_LOADING', false);
     },
     async PurchaseDomain({ commit }, domains) {
+      commit('SET_LOADING', true);
       try {
         const { data } = await axios.post('/api/users/purchase', {
           domains,
@@ -198,6 +216,7 @@ const store = new Vuex.Store({
           type: 'ERROR',
         });
       }
+      commit('SET_LOADING', false);
     },
   },
 

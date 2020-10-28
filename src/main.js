@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import App from './App.vue';
 
+import Spinner from 'vue-simple-spinner';
+
 import store from './store';
 import router from './router';
 import Dropdown from './components/Dropdown';
@@ -12,6 +14,7 @@ import '@fortawesome/fontawesome-free/js/all.js';
 Vue.config.productionTip = false;
 Vue.component('drop-down', Dropdown);
 Vue.component('NewUrlButton', NewUrlButton);
+Vue.component('Loader', Spinner);
 
 store.dispatch('GetUser').then((error) => {
   if (error) console.log('err @main GetUser', error);
