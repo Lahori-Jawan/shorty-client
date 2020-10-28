@@ -5,8 +5,6 @@ import { TokenService } from '@/services/Token';
 
 Vue.use(Vuex);
 
-const defaultDomain = { domain: 'https://pbid.io' };
-
 const store = new Vuex.Store({
   state: {
     loading: null,
@@ -25,7 +23,9 @@ const store = new Vuex.Store({
     isModalChanged: (state) =>
       Boolean(state.notification.message.trim().length),
     activeDomain: (state, getters) =>
-      getters.purchasedUrls.find((url) => url.active) || defaultDomain,
+      getters.purchasedUrls.find((url) => url.active) || {
+        domain: state.user.default,
+      },
   },
 
   mutations: {
@@ -183,7 +183,7 @@ const store = new Vuex.Store({
         const { message, user } = data;
         commit('SET_USER', user);
         commit('SET_NOTIFICATION', { message });
-        // commit('TOGGLE_MODAL');
+        TokenService.setToken(user.accessToken);
       } catch (error) {
         console.log('error', error);
 
