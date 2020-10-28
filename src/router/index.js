@@ -37,7 +37,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const page = to.name;
-  const publicPages = ['Login', 'Register'];
+  const publicPages = ['Login', 'Register', 'Not-Found'];
   const authRequired = !publicPages.includes(page);
   const loggedIn = store.getters.isLoggedIn;
 
