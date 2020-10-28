@@ -56,7 +56,7 @@ export default {
 
       if (loggedOut) {
         this.$router
-          .replace({ path: '/auth/*' })
+          .replace({ path: '/auth/login' })
           .catch((error) => console.log('logged-out error', error));
       }
 
